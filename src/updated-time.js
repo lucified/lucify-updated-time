@@ -8,29 +8,30 @@ export default class UpdatedTime extends React.Component {
 
   displayName: 'UpdatedTime'
 
-  propTypes: {
-    metaDataUrl: React.PropTypes.string.isRequired,
-    format: React.PropTypes.func,
-    prefix: 'Updated ',
-    suffix: '';
-  }
-
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       stamp: null
     };
   }
 
-  getDefaultProps() {
-    return {
-      format: function(date) {
-        return (
-          <span>
-            {moment(date).format('MMM D, YYYY')}
-          </span>
-        );
-      }
-    };
+  static propTypes = {
+    metaDataUrl: React.PropTypes.string.isRequired,
+    format: React.PropTypes.func,
+    prefix: React.PropTypes.node,
+    suffix: React.PropTypes.node
+  }
+
+  static defaultProps = {
+    format: date => {
+      return (
+        <span>
+          {moment(date).format('MMM D, YYYY')}
+        </span>
+      );
+    },
+    prefix: 'Updated ',
+    suffix: ''
   }
 
   componentDidMount() {
