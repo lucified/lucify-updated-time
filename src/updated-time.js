@@ -23,7 +23,8 @@ export default class UpdatedTime extends React.Component {
   }
 
   static defaultProps = {
-    format: date => {
+    format: stamp => {
+      const date = new Date(stamp*1000);
       return (
         <span>
           {moment(date).format('MMM D, YYYY')}
@@ -37,7 +38,7 @@ export default class UpdatedTime extends React.Component {
   componentDidMount() {
     d3.json(this.props.metaDataUrl, data => {
       if (data) {
-        this.setState({stamp: new Date(parseInt(data.stampUpdated)*1000)});
+        this.setState({stamp: data.stampUpdated});
       }
     });
   }
@@ -49,7 +50,7 @@ export default class UpdatedTime extends React.Component {
     return (
       <span>
         {this.props.prefix}
-        {this.props.format(this.state.data)}
+        {this.props.format(this.state.stamp)}
         {this.props.suffix}
       </span>
     );
