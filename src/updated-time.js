@@ -6,25 +6,16 @@ import moment from 'moment';
 
 export default class UpdatedTime extends React.Component {
 
-  displayName: 'UpdatedTime'
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      stamp: null
-    };
-  }
-
   static propTypes = {
     metaDataUrl: React.PropTypes.string.isRequired,
     format: React.PropTypes.func,
     prefix: React.PropTypes.node,
-    suffix: React.PropTypes.node
+    suffix: React.PropTypes.node,
   }
 
   static defaultProps = {
     format: stamp => {
-      const date = new Date(stamp*1000);
+      const date = new Date(stamp * 1000);
       return (
         <span>
           {moment(date).format('MMM D, YYYY')}
@@ -32,13 +23,24 @@ export default class UpdatedTime extends React.Component {
       );
     },
     prefix: 'Updated ',
-    suffix: ''
+    suffix: '',
   }
+
+  displayName: 'UpdatedTime'
+
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      stamp: null,
+    };
+  }
+
 
   componentDidMount() {
     d3.json(this.props.metaDataUrl, data => {
       if (data) {
-        this.setState({stamp: data.stampUpdated});
+        this.setState({ stamp: data.stampUpdated });
       }
     });
   }
@@ -63,5 +65,3 @@ export default class UpdatedTime extends React.Component {
   }
 
 }
-
-UpdatedTime.prototype.displayName = 'UpdatedTime';
